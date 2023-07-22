@@ -1,16 +1,61 @@
+import Notiflix, { Block } from 'notiflix';
 import axios from "axios";
 
 axios.defaults.headers.common["x-api-key"] = "live_iHte4Ifc1eYMaA1v3RjGcO3u6BwcwuUZG8rC1iHwV0PZXYcg8WD6lIpyyl8p9QcL";
 
-// Colección de razas
-// Al cargar la página, debe hacerse una petición HTTP a la colección de razas.Para ello, haga una petición GET al recurso
-// https://api.thecatapi.com/v1/breeds, que devuelve un array de objetos. Si la petición tiene éxito, debe rellenar select.breed-select 
-// con opciones para que el value de la opción contenga el id de la raza y la interfaz de usuario muestre el nombre de la raza.
+let select = document.querySelector(".breed-select");
+let loader = document.querySelector(".loader");
+let error = document.querySelector(".error");
+let catInfo = document.querySelector(".cat-info");
+let initialMessage = document.querySelector(".Breed-message");
+loader.classList.remove("hidden");
+initialMessage.classList.remove("hidden");
 
-// Escriba una función fetchBreeds() que haga una petición HTTP y devuelva un promise con un array de razas como resultado de la petición. 
-// Póngala en el archivo cat - api.js y haga una exportación con el nombre.
+function fetchBreeds() {
+    fetch("https://api.thecatapi.com/v1/breeds").then((response) => {
+        if (!response.ok) {
+            Notiflix.Notify.warning("Oops! Something went wrong! Try reloading the page!");
+        }
+        loader.classList.add("hidden");
+        return response.json();
+    })
+        .then(data => {
+            data.map(keys => {
+                let namesCats = keys.name;
+                const option = document.createElement('option');
+                option.value = keys.reference_image_id;
+                option.text = namesCats;
+                select.appendChild(option);
+            });
+            
+            return data;
+        }).catch(err => {
+            console.log('Oops! Something went wrong! Try reloading the page!');
+        });
+}
 
-fetch("https://api.thecatapi.com/v1/breeds").then(response => {
-    response.json();
-    console.log(response);
-})
+const dataAPI = fetchBreeds();
+
+select.addEventListener("change", (e) => {
+    fetchBreeds()
+    loader.classList.remove("hidden");
+    fetchImages(e.target.value).then(response => {
+    return response.json()
+    }).then(data => {
+        initialMessage.classList.add("hidden");
+        catInfo.innerHTML = `
+       <img class="cat-info__cat-image lazyload blur-up" src="${data.url}" data-src="${data.url}" alt="" width="300px" height="300px">
+       <div class="cat-description">
+       <h2 class="cat-description__cat-breed">${data.breeds[0].name}</h2>
+       <p class="cat-description__cat-temperament">${data.breeds[0].description}</p>
+       <h3 class="cat-description__cat-temperament">Temperament</h3>
+       <p class="cat-description__cat-temperament">${data.breeds[0].temperament}</p>
+       </div>`
+    }).catch(err => {
+        error.classList.remove("hidden");
+    });
+});
+
+function fetchImages(id) {
+    return fetch(`https://api.thecatapi.com/v1/images/${id}`);
+}

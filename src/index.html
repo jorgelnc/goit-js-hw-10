@@ -3,14 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
     <title>Homework 10</title>
   </head>
   <body>
+    <h3 class="title">Breed</h3>
     <select class="breed-select"></select>
-    <p class="loader">Loading data, please wait...</p>
-    <p class="error">Oops! Something went wrong! Try reloading the page!</p>
+    <span class="loader hidden">L &nbsp; ading</span>
+    <h4 class="Breed-message hidden">Please, select a Breed.</h4>
+    <p class="error hidden">
+      Oops! Something went wrong! Try reloading the page!
+    </p>
     <div class="cat-info"></div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js"></script>
     <script src="index.js" type="module"></script>
   </body>
 </html>
