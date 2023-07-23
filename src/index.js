@@ -44,7 +44,7 @@ select.addEventListener("change", (e) => {
     }).then(data => {
         initialMessage.classList.add("hidden");
         catInfo.innerHTML = `
-       <img class="cat-info__cat-image lazyload blur-up" src="${data.url}" data-src="${data.url}" alt="" width="300px" height="300px">
+       <img class="cat-info__cat-image lazyload blur-up" src="${data.url}" data-src="${data.url}" alt="" width="400px" height="300px">
        <div class="cat-description">
        <h2 class="cat-description__cat-breed">${data.breeds[0].name}</h2>
        <p class="cat-description__cat-temperament">${data.breeds[0].description}</p>

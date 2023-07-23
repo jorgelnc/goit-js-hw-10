@@ -3,7 +3,9 @@
 }
 
 .breed-select {
-    margin-bottom: 50px;
+    margin-bottom: 25px;
+    padding: 10px;
+    text-align: center;
 }
 
 body {
@@ -11,10 +13,14 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 20px;
 }
 
 .cat-info {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 40px;
 }
 
@@ -22,9 +28,15 @@ body {
     border: solid gray;
     border-radius: 20px;
     width: 500px;
+    height: 250px;
     text-align: center;
     padding: 20px;
 
+}
+
+.Breed-message {
+    margin: 0;
+    padding: 0;
 }
 
 .blur-up {
